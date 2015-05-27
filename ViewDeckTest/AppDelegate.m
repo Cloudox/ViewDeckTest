@@ -22,20 +22,40 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    //中间视图
     CenterViewController *centerView = [[CenterViewController alloc] initWithNibName:@"CenterViewController" bundle:nil];
+    //包装成Nav
     UINavigationController *centerNav = [[UINavigationController alloc]initWithRootViewController:centerView];
+    //添加Nav左侧按钮
     centerView.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"左侧" style:UIBarButtonItemStyleDone target:self action:@selector(toLeft)];
+    //左、右视图
     LeftViewController *leftView = [[LeftViewController alloc] initWithNibName:@"LeftViewController" bundle:nil];
     RightViewController *rightView = [[RightViewController alloc] initWithNibName:@"RightViewController" bundle:nil];
+    //初始化ViewDeck
     self.deckController = [[IIViewDeckController alloc]initWithCenterViewController:centerNav leftViewController:leftView rightViewController:rightView];
+    //设置左边视图显示时的宽度
     self.deckController.leftSize = self.window.frame.size.width - (250);
+    //设置当滑动到左右边时，中间视图对点击的响应————————————————————————
+    //1.默认设置，点击中间界面不会返回中间界面，中间界面控件有响应
+//    self.deckController.centerhiddenInteractivity = IIViewDeckCenterHiddenUserInteractive;
+    
+    //2.点击中间界面任何地方无作用，中间界面控件不响应
+//    self.deckController.centerhiddenInteractivity = IIViewDeckCenterHiddenNotUserInteractive;
+    
+    //3.点击中间任何地方可返回中间界面，中间界面控件不响应
     self.deckController.centerhiddenInteractivity = IIViewDeckCenterHiddenNotUserInteractiveWithTapToClose;
+    
+    //4.点击中间界面任何地方可弹回中间界面，中间界面控件不响应
+//    self.deckController.centerhiddenInteractivity = IIViewDeckCenterHiddenNotUserInteractiveWithTapToCloseBouncing;
+    //————————————————————————————————————————————————————————————
     self.window.rootViewController = self.deckController;
     return YES;
 }
 
 - (void)toLeft {
-//    [self.deckController toggleLeftViewAnimated:YES];
+    //两种方式打开一个界面
+//    [self.deckController toggleLeftViewAnimated:YES];//直接打开
+    //判断是否打开，做出不同响应
     if ([self.deckController isSideOpen:IIViewDeckLeftSide]) {
         [self.deckController closeLeftView];
     }

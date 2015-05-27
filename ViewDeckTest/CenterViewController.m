@@ -25,6 +25,7 @@
     // Dispose of any resources that can be recreated.
 }
 
+//用来测试滑到左边时还接不接受点击的按钮
 - (IBAction)centerBtn:(id)sender {
     NSLog(@"点击成功");
 }

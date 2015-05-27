@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface CenterViewController : UIViewController
-- (IBAction)centerBtn:(id)sender;
+- (IBAction)centerBtn:(id)sender;//用来测试滑到左边时还接不接受点击的按钮
 
 @end
