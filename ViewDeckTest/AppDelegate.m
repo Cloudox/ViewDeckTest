@@ -7,6 +7,10 @@
 //
 
 #import "AppDelegate.h"
+#import "CenterViewController.h"
+#import "IIViewDeckController.h"
+#import "LeftViewController.h"
+#import "RightViewController.h"
 
 @interface AppDelegate ()
 
@@ -17,7 +21,27 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    CenterViewController *centerView = [[CenterViewController alloc] initWithNibName:@"CenterViewController" bundle:nil];
+    UINavigationController *centerNav = [[UINavigationController alloc]initWithRootViewController:centerView];
+    centerView.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"左侧" style:UIBarButtonItemStyleDone target:self action:@selector(toLeft)];
+    LeftViewController *leftView = [[LeftViewController alloc] initWithNibName:@"LeftViewController" bundle:nil];
+    RightViewController *rightView = [[RightViewController alloc] initWithNibName:@"RightViewController" bundle:nil];
+    self.deckController = [[IIViewDeckController alloc]initWithCenterViewController:centerNav leftViewController:leftView rightViewController:rightView];
+    self.deckController.leftSize = self.window.frame.size.width - (250);
+    self.deckController.centerhiddenInteractivity = IIViewDeckCenterHiddenNotUserInteractiveWithTapToClose;
+    self.window.rootViewController = self.deckController;
     return YES;
+}
+
+- (void)toLeft {
+//    [self.deckController toggleLeftViewAnimated:YES];
+    if ([self.deckController isSideOpen:IIViewDeckLeftSide]) {
+        [self.deckController closeLeftView];
+    }
+    else {
+        [self.deckController openLeftView];
+    }
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
