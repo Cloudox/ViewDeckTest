@@ -6,4 +6,6 @@
 在主视图中添加了一个Button用来测试在打开左视图时点击是否会有响应，
 对应有四种设置方式可以决定是否响应、是否随意点击中间视图回到中间视图。
 
+详细说明查看[我的博客](http://blog.csdn.net/cloudox_/article/details/46046735)
+
 原类库地址为：https://github.com/Inferis/ViewDeck
